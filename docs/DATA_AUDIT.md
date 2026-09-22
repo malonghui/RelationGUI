@@ -22,9 +22,9 @@ Matching the total alone does not establish the paper's historical dataset. Cons
 
 The combined `finetune_relation.json` contains 50,525 functional training examples: desktop 2,300, mobile 30,623, web 17,602. The mobile/web totals include synthetic negatives, so this file is not the 37,724-relation source corpus. An older local v1 preprocessing pass retained 45,900 examples; it also introduced a dev/test protocol absent from the paper. Those later artifacts are not reused as the published experimental split.
 
-## Quality-filtered rebuild
+## Updated release v2026.09
 
-The candidate uses canonical source groups with all available relation dimensions. Desktop crop augmentation and synthetic negatives are omitted because the historical inclusion list is unverified. This changes the training distribution and prevents claiming direct reproduction of published performance.
+The updated release uses canonical source groups with all available relation dimensions. Desktop crop augmentation and synthetic negatives are omitted because the historical inclusion list is unverified. This changes the training distribution and prevents claiming direct reproduction of published performance.
 
 | Platform | Accepted groups | Benchmark-source groups | Training groups |
 |---|---:|---:|---:|
@@ -59,4 +59,8 @@ The historical desktop selection and UGround supplement are not recoverable from
 
 The original files contain screenshot content from external applications/websites and MobileViews. The build allowlist excludes crawler scripts, local credentials, logs, raw browser state and model weights. Publication does not create new rights to third-party screenshots. An open-source/data license has not been invented or assigned during this preparation.
 
-The full machine-readable audit and individual exclusions are inside the candidate dataset package. At this preparation stage, dataset publication remains pending and the candidate is not advertised as an exact 37,724-sample reproduction.
+The full machine-readable audit and individual exclusions are inside the updated dataset package. The author selected this quality-filtered rebuild for publication as an updated version. It is not advertised as an exact 37,724-sample reproduction.
+
+## Release validation
+
+All 11,275 referenced image files passed integrity checks. Every normalized bounding box is valid, record IDs are unique, and source-path plus decoded-pixel checks find zero training/RelationQA source overlap. Both final ZIP archives pass CRC and SHA256 verification. Eight lightweight tests cover strict scoring, source grouping, coordinate bounds and atomic packaging. GPU model training and published-result reproduction have not been run.

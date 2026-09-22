@@ -267,14 +267,16 @@ def pack(output):
     checksums = []
     for name in ('RelationGUI','RelationQA'):
         path = output/(name+'-cleaned.zip')
-        with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=4,allowZip64=True) as z:
+        temporary = path.with_suffix('.zip.partial')
+        with zipfile.ZipFile(temporary,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=4,allowZip64=True) as z:
             for f in sorted((output/name).rglob('*')):
                 if f.is_file():
                     z.write(f,f.relative_to(output).as_posix())
-        with zipfile.ZipFile(path) as z:
+        with zipfile.ZipFile(temporary) as z:
             failure = z.testzip()
             if failure:
                 raise ValueError('Corrupt archive member: '+failure)
+        temporary.replace(path)
         checksums.append(sha256(path)+'  '+path.name)
         print(path.name,path.stat().st_size,flush=True)
     (output/'SHA256SUMS').write_text('\n'.join(checksums)+'\n',encoding='utf-8')

@@ -1,5 +1,6 @@
 """Validate IDs, image integrity, coordinates and source-level split isolation."""
 import argparse
+from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
@@ -14,6 +15,7 @@ def read_jsonl(path):
     return rows
 
 
+@lru_cache(maxsize=None)
 def resolve_image(root,value):
     p=(root/value).resolve()
     if Path(value).is_absolute() or not p.is_relative_to(root.resolve()) or not p.is_file():
@@ -28,15 +30,20 @@ def validate(root):
     heldout_sources={json.loads(x)['source_id'] for x in (qa/'source_exclusions.jsonl').read_text(encoding='utf-8').splitlines()}
     if len(benchmark)!=1009:
         raise ValueError('RelationQA must retain the 1,009 original questions')
-    images=set(); benchmark_pixels=set()
+    images=set(); benchmark_pixels=set(); decoded_files=set()
     for row in benchmark:
         if row['answer'] not in {'trigger','complement','parallel','none'}:
             raise ValueError('Unexpected QA label')
         for value in row['images'].values():
             images.add(resolve_image(qa,value))
-        with Image.open(resolve_image(qa,row['images']['original'])) as im:
-            rgb=im.convert('RGB')
-            benchmark_pixels.add(hashlib.sha256(str(rgb.size).encode()+rgb.tobytes()).hexdigest())
+        original=resolve_image(qa,row['images']['original'])
+        with original.open('rb') as f:
+            file_hash=hashlib.file_digest(f,'sha256').hexdigest()
+        if file_hash not in decoded_files:
+            with Image.open(original) as im:
+                rgb=im.convert('RGB')
+                benchmark_pixels.add(hashlib.sha256(str(rgb.size).encode()+rgb.tobytes()).hexdigest())
+            decoded_files.add(file_hash)
     train_sources=set(); train_pixels=set()
     for row in relations:
         images.add(resolve_image(gui,row['image']))

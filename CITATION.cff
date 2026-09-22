@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use RelationGUI, RelationQA, or RelationAgent, please cite our paper."
-type: article
-title: "Beyond element-level understanding: Explicit relational understanding for GUI agents"
+type: software
+title: "RelationGUI: Explicit Relational Understanding for GUI Agents"
 authors:
   - family-names: Ma
     given-names: Longhui
@@ -13,9 +13,23 @@ authors:
     given-names: Zhao
   - family-names: Wang
     given-names: Miao
-doi: 10.1016/j.patcog.2026.113262
-year: 2026
-journal: Pattern Recognition
-volume: 176
-start: 113262
-url: "https://doi.org/10.1016/j.patcog.2026.113262"
+repository-code: "https://github.com/malonghui/RelationGUI"
+preferred-citation:
+  type: article
+  title: "Beyond element-level understanding: Explicit relational understanding for GUI agents"
+  authors:
+    - family-names: Ma
+      given-names: Longhui
+    - family-names: Zhao
+      given-names: Di
+    - family-names: Wang
+      given-names: Siwei
+    - family-names: Lv
+      given-names: Zhao
+    - family-names: Wang
+      given-names: Miao
+  journal: Pattern Recognition
+  volume: "176"
+  start: "113262"
+  year: 2026
+  doi: 10.1016/j.patcog.2026.113262

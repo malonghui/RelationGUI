@@ -19,7 +19,9 @@ Longhui Ma · Di Zhao · Siwei Wang · Zhao Lv · Miao Wang
 
 This repository contains the public data preparation, training, inference, and evaluation implementation. Code and documentation live on GitHub; packaged datasets belong on [Hugging Face](https://huggingface.co/datasets/ahuiqqq/RelationGUI).
 
-The surviving source data have been audited against the published paper. A quality-filtered dataset candidate has been rebuilt, but **the original 37,724-sample experimental release has not been recovered**. The desktop inclusion list remains unverified. The rebuilt data and this refactored implementation must not be presented as reproducing the reported scores. See [the release audit](docs/DATA_AUDIT.md) for exact counts, exclusions, and provenance. Dataset upload is pending; the commands below apply once the named archives are available.
+**Updated release v2026.09** rebuilds and quality-filters the surviving source data. It corrects image metadata and grounding coordinates, removes invalid annotations, and excludes RelationQA source screenshots from every training task. The update contains **30,670 valid relation groups**, of which **28,093 are eligible for training**, and retains all **1,009 RelationQA questions**.
+
+This updated version supersedes the unfiltered local exports; its counts and training instructions differ from the paper's original 37,724-sample version. The original desktop inclusion list has not been recovered, so this release does not claim an exact reconstruction of the historical experiment or reproduction of its reported scores. See [the release audit](docs/DATA_AUDIT.md). The archives have passed full validation; Hugging Face upload is in progress.
 
 ## Overview
 
@@ -60,7 +62,16 @@ The requirements select a Qwen2.5-VL-compatible Transformers 4.x stack. No GPU t
 
 ## Dataset layout
 
-Download the two archives from Hugging Face and extract them under `data/`:
+Download the two archives from Hugging Face and extract them under `data/`. The dataset repository contains a checksum file and a data card explaining this updated version.
+
+```bash
+hf download ahuiqqq/RelationGUI --repo-type dataset --local-dir downloads \
+  --include "*.zip" --include "SHA256SUMS"
+python -m zipfile -e downloads/RelationGUI-cleaned.zip data
+python -m zipfile -e downloads/RelationQA-cleaned.zip data
+```
+
+The `hf` command is provided by `huggingface_hub`. You can also download the same files through the Hugging Face website.
 
 ```text
 data/
