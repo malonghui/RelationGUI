@@ -25,15 +25,9 @@ This updated version supersedes the unfiltered local exports; its counts and tra
 
 ## Overview
 
-```mermaid
-flowchart LR
-    A[Desktop · Mobile · Web] --> B[RelationGUI]
-    B --> C[Spatial · Functional · Hierarchical]
-    B --> D[RelationQA: 1,009 questions]
-    E[Qwen2.5-VL-3B] --> F[Grounding SFT]
-    F --> G[Relation SFT]
-    G --> H[Navigation SFT]
-```
+![RelationGUI data collection and annotation pipeline from Figure 2 of the paper](assets/framework.png)
+
+*Figure 2 from the paper: the cross-platform data collection and annotation pipeline of RelationGUI.*
 
 The functional taxonomy contains **trigger**, **complement**, **parallel**, and **none**. RelationQA uses top-1 exact-match accuracy. The paper reports **49.7% RelationQA accuracy** and **79.2% ScreenSpot accuracy** for RelationAgent; these are published results, not new runs of this release.
 
