@@ -21,7 +21,7 @@ This repository contains the public data preparation, training, inference, and e
 
 **Updated release v2026.09** rebuilds and quality-filters the surviving source data. It corrects image metadata and grounding coordinates, removes invalid annotations, and excludes RelationQA source screenshots from every training task. The update contains **30,670 valid relation groups**, of which **28,093 are eligible for training**, and retains all **1,009 RelationQA questions**.
 
-This updated version supersedes the unfiltered local exports; its counts and training instructions differ from the paper's original 37,724-sample version. The original desktop inclusion list has not been recovered, so this release does not claim an exact reconstruction of the historical experiment or reproduction of its reported scores. See [the release audit](docs/DATA_AUDIT.md). The archives have passed full validation; Hugging Face upload is in progress.
+This updated version supersedes the unfiltered local exports; its counts and training instructions differ from the paper's original 37,724-sample version. The original desktop inclusion list has not been recovered, so this release does not claim an exact reconstruction of the historical experiment or reproduction of its reported scores. See [the release audit](docs/DATA_AUDIT.md). The validated archives are publicly available on [Hugging Face, release v2026.09](https://huggingface.co/datasets/ahuiqqq/RelationGUI/tree/v2026.09). Both remote archive hashes match the published SHA256SUMS.
 
 ## Overview
 
@@ -65,7 +65,7 @@ The requirements select a Qwen2.5-VL-compatible Transformers 4.x stack. No GPU t
 Download the two archives from Hugging Face and extract them under `data/`. The dataset repository contains a checksum file and a data card explaining this updated version.
 
 ```bash
-hf download ahuiqqq/RelationGUI --repo-type dataset --local-dir downloads \
+hf download ahuiqqq/RelationGUI --repo-type dataset --revision v2026.09 --local-dir downloads \
   --include "*.zip" --include "SHA256SUMS"
 python -m zipfile -e downloads/RelationGUI-cleaned.zip data
 python -m zipfile -e downloads/RelationQA-cleaned.zip data
